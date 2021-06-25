@@ -1,9 +1,7 @@
 import { FC, Fragment } from "react";
-import { TextField } from "@material-ui/core";
+import { FilledTextFieldProps, TextField } from "@material-ui/core";
 
-export interface CustomTextFieldProps {
-  label: string;
-}
+export interface CustomTextFieldProps extends FilledTextFieldProps {}
 
 export const CustomTextField: FC<CustomTextFieldProps> = (props) => {
   return (
@@ -11,9 +9,9 @@ export const CustomTextField: FC<CustomTextFieldProps> = (props) => {
       <TextField
         size="small"
         id="outlined-basic"
-        label={props.label}
-        variant="outlined"
         style={{ width: "100%" }}
+        {...props}
+        label={props.label}
       />
     </div>
   );

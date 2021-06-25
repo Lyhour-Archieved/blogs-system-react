@@ -7,6 +7,10 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { TextField } from "@material-ui/core";
 import { CustomTextField } from "../components/CTextField/custome-textfield";
+import { Formik } from "formik";
+import { loginService } from "../services/login.service";
+import { useHistory } from "react-router-dom";
+import { PATH_ENUM } from "../router/path";
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
@@ -26,8 +30,7 @@ const useStyles = makeStyles({
 
 const LoginPage = () => {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
-
+  const route = useHistory();
   const LoginCard = (
     <Card className={classes.root}>
       <CardContent>
@@ -36,15 +39,68 @@ const LoginPage = () => {
         </Typography>
       </CardContent>
       <CardContent>
-        <CustomTextField label="Username" />
-        <br />
-        <CustomTextField label="Password" />
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          onSubmit={(values, { setSubmitting }) => {
+            console.log("value", values);
+            loginService(values)
+              .then((res) => {
+                console.log(res);
+                route.push(PATH_ENUM.DASHBOARD);
+              })
+              .catch((err) => console.log(err))
+              .finally(() => {
+                setSubmitting(false);
+              });
+          }}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+            /* and other goodies */
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <CustomTextField
+                label="Username"
+                type="email"
+                name="email"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
+                variant="filled"
+              />
+              <br />
+              <CustomTextField
+                label="Password"
+                type="password"
+                name="password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+                variant="filled"
+              />
+              {errors.password && touched.password && errors.password}
+
+              <CardActions>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  disabled={isSubmitting}
+                >
+                  Login
+                </Button>
+              </CardActions>
+            </form>
+          )}
+        </Formik>
       </CardContent>
-      <CardActions>
-        <Button variant="contained" color="primary" size="small">
-          Login
-        </Button>
-      </CardActions>
     </Card>
   );
   return (
