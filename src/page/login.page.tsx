@@ -5,7 +5,6 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { TextField } from "@material-ui/core";
 import { CustomTextField } from "../components/CTextField/custome-textfield";
 import { Formik } from "formik";
 import { loginService } from "../services/login.service";
@@ -47,6 +46,7 @@ const LoginPage = () => {
               .then((res) => {
                 console.log(res);
                 route.push(PATH_ENUM.DASHBOARD);
+                window.localStorage.setItem("token", res.data.data.token);
               })
               .catch((err) => console.log(err))
               .finally(() => {
