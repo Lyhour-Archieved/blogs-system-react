@@ -6,7 +6,7 @@ import "../styles/App.css";
 function App() {
   return (
     <div>
-      <AuthProvider token={"12"}>
+      <AuthProvider>
         <RouteView />
       </AuthProvider>
     </div>

@@ -6,7 +6,6 @@ import {
   Theme,
   createStyles,
 } from "@material-ui/core/styles";
-// import { Button } from "@babel/core";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
@@ -22,9 +21,12 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import PostPage from "./post.page";
 import CommentPage from "./commment.page";
+import { Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import { PATH_ENUM } from "../router/path";
+import { useGetInfo } from "../context/AuthProvider";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
@@ -87,6 +89,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function DashboardPage() {
+  const route = useHistory();
+  const userInfo = useGetInfo();
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -105,7 +109,7 @@ export default function DashboardPage() {
     },
     {
       id: 2,
-      title: "Commnet",
+      title: "Comments",
       icon: <InboxIcon />,
       components: <CommentPage />,
     },
@@ -118,6 +122,11 @@ export default function DashboardPage() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const logout = () => {
+    window.localStorage.clear();
+    route.push(PATH_ENUM.HOME);
   };
 
   return (
@@ -139,11 +148,25 @@ export default function DashboardPage() {
           >
             <MenuIcon />
           </IconButton>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="h6" noWrap>
-              {leftSideData.find((data) => data.id === currentSelectTab)?.title}
-            </Typography>
-            <Button>Logout</Button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <div>
+              <Typography variant="h6" noWrap>
+                {
+                  leftSideData.find((data) => data.id === currentSelectTab)
+                    ?.title
+                }
+              </Typography>
+            </div>
+            <p>{userInfo?.email}</p>
+            <Button style={{ color: "white" }} onClick={logout}>
+              Logout
+            </Button>
           </div>
         </Toolbar>
       </AppBar>
