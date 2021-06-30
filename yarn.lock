@@ -2,13 +2,6 @@
 # yarn lockfile v1
 
 
-"@asurraa/sura-ui-modal@^1.1.5":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@asurraa/sura-ui-modal/-/sura-ui-modal-1.1.5.tgz#d4fd34602bde70a8d015ab60acb156a88f97e0fe"
-  integrity sha512-ee8944V2K3wdXNva29NKvK0P4mj3PYW8PlU7xXrt1PWf1yfUu0px7jBY0NlQcmSl9jOFtZWaN3d6ylCL57q5xw==
-  dependencies:
-    ant-design-draggable-modal "^1.0.0"
-
 "@babel/code-frame@7.10.4":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.10.4.tgz#168da1a36e90da68ae8d49c0f1b48c7c6249213a"
@@ -2410,13 +2403,6 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   integrity sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==
   dependencies:
     color-convert "^2.0.1"
-
-ant-design-draggable-modal@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ant-design-draggable-modal/-/ant-design-draggable-modal-1.0.0.tgz#6988907487293053d22158e768659d17a8ae26e4"
-  integrity sha512-AG8e1DFqopMBHxb3usuWV8PWeqGWbXaGwUAqp4PDOPgvhdM+jVISS8hJY7/wNHrYOec9jT6KhuXFzo49oD4UkA==
-  dependencies:
-    react-uid "^2.3.0"
 
 anymatch@^2.0.0:
   version "2.0.0"
@@ -9457,13 +9443,6 @@ react-transition-group@^4.4.0:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
-
-react-uid@^2.3.0:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/react-uid/-/react-uid-2.3.1.tgz#22a75d4a948a4824b9b8078cbf864d55d91ca4be"
-  integrity sha512-6C5pwNYP1udgp5feQ9MTBZBKD4su9nhD2aYCFY1bB0Bpask8wYKYz0ZhAtAJ4lcmTDC5kY1ByGTQMFDHQW6p0w==
-  dependencies:
-    tslib "^1.10.0"
 
 react@^17.0.2:
   version "17.0.2"
