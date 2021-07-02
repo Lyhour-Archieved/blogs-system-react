@@ -13,6 +13,7 @@ import {
   deletePostService,
   PostInterface,
   postsService,
+  updatePostService,
 } from "../services/post.service";
 import {
   Button,
@@ -34,6 +35,7 @@ const useStyles = makeStyles({
 export default function PostPage() {
   const [data, setData] = useState<Array<PostInterface> | undefined>();
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [editable, setEditable] = useState<undefined | PostInterface>();
   const fetchData = () => {
     postsService().then((res) => {
       // @ts-ignore
@@ -55,15 +57,30 @@ export default function PostPage() {
         // onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Create POST</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          {editable === undefined ? "Create" : "Edit"}
+        </DialogTitle>
         <DialogContent>
           <Formik
-            initialValues={{ title: "", description: "", content: "" }}
+            initialValues={
+              editable === undefined
+                ? { title: "", description: "", content: "" }
+                : editable
+            }
             onSubmit={(values, { setSubmitting }) => {
               console.log("submit value", values);
-              createPostService(values).then((res) => {
-                fetchData();
-              });
+
+              if (editable === undefined) {
+                createPostService(values).then((res) => {
+                  fetchData();
+                  setOpenModal(false);
+                });
+              } else {
+                updatePostService(editable.id, editable).then((res) => {
+                  fetchData();
+                  setOpenModal(false);
+                });
+              }
             }}
           >
             {({
@@ -107,7 +124,13 @@ export default function PostPage() {
                 />
 
                 <DialogActions>
-                  <Button onClick={() => setOpenModal(false)} color="primary">
+                  <Button
+                    onClick={() => {
+                      setOpenModal(false);
+                      setEditable(undefined);
+                    }}
+                    color="primary"
+                  >
                     Cancel
                   </Button>
                   <Button type="submit" color="primary">
@@ -158,6 +181,14 @@ export default function PostPage() {
                     }}
                   >
                     Delete
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setEditable(data);
+                      setOpenModal(true);
+                    }}
+                  >
+                    Edit
                   </Button>
                 </TableCell>
               </TableRow>

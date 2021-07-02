@@ -18,6 +18,10 @@ export interface PostInterface {
   title: string;
   updated_at: Date;
 }
+export type PostSubmitType = Pick<
+  PostInterface,
+  "description" | "title" | "content"
+>;
 
 export const postsService = () => {
   return myAxios.get<InterfaceCustomHttp<PostInterface>>(
@@ -29,8 +33,10 @@ export const deletePostService = (id: PostInterface["id"]) => {
   return myAxios.delete(`${ROUTE_API.DELETE_POST}/${id}`);
 };
 
-export const createPostService = (
-  data: Pick<PostInterface, "description" | "title" | "content">
-) => {
+export const createPostService = (data: PostSubmitType) => {
   return myAxios.post(`${ROUTE_API.CREATE_POST}`, data);
+};
+
+export const updatePostService = (id: number, data: PostSubmitType) => {
+  return myAxios.patch(`${ROUTE_API.UPDATE_POST}/${id}`, data);
 };
